@@ -1,0 +1,22 @@
+# Build artifacts
+dist
+build
+
+# Dependencies
+node_modules
+
+# Environment & secrets
+.env
+.env.*
+
+# Logs & uploads
+logs
+uploads
+
+# Documentation
+README.md
+
+# Misc
+.gitignore
+.prettierignore
+package-lock.json

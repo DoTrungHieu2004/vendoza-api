@@ -1,0 +1,35 @@
+# Environment & secrets
+.env
+.env.local
+.env*.local
+
+# Dependencies
+node_modules/
+
+# Logs
+logs/
+*.logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Runtime data
+pid
+*.pid
+*.seed
+*.pid.lock
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Uploads
+uploads/
+
+# Misc
+dist/
+build/
+.vscode/
+*.swp
+*.swo
+*~
