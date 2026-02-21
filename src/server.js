@@ -7,6 +7,7 @@ require('dotenv').config();
 
 const routes = require('./routes/index.route');
 const logger = require('./utils/logger');
+const connectDB = require('./config/db');
 
 const app = express();
 const PORT = process.env.PORT;
@@ -19,6 +20,9 @@ app.use(express.json());
 
 // Routes
 app.use('/api', routes);
+
+// Connect to database
+connectDB();
 
 // Start server
 app.listen(PORT, () => {
