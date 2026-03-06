@@ -13,12 +13,14 @@ const userSchema = new mongoose.Schema({
   password_hash: { type: String, required: true },
   phone: {
     type: String,
+    required: true,
     trim: true,
     validate: {
       validator: function (v) {
         // Simple international phone regex – allows +, digits, spaces, dashes, parentheses
         return /^[\+]?[(]?[0-9]{1,4}[)]?[-\s\.]?[(]?[0-9]{1,4}[)]?[-\s\.]?[0-9]{1,9}$/.test(v);
       },
+      message: (props) => `${props.value} is not a valid phone number!`,
     },
   },
   addresses: [

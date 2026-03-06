@@ -6,9 +6,10 @@ const registerSchema = Joi.object({
   password: Joi.string().required().min(6).max(100),
   phone: Joi.string()
     .pattern(/^[\+]?[(]?[0-9]{1,4}[)]?[-\s\.]?[(]?[0-9]{1,4}[)]?[-\s\.]?[0-9]{1,9}$/)
-    .optional()
+    .required()
     .messages({
       'string.pattern.base': 'Phone number must be a valid format',
+      'any.required': 'Phone number is required',
     }),
 });
 
