@@ -18,7 +18,7 @@ const productVariantSchema = new mongoose.Schema(
       },
     },
     stock_quantity: { type: Number, required: true, min: 0, default: 0 },
-    low_stock_threshold: { type: Numbeer, min: 0, default: 5 },
+    low_stock_threshold: { type: Number, min: 0, default: 5 },
     attributes: {
       type: mongoose.Schema.Types.Mixed, // e.g., { size: 'M', color: 'Red' }
       default: {},
