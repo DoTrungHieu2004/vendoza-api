@@ -7,7 +7,7 @@ const Category = require('../models/Category');
 // @access  Public
 const getProducts = async (req, res, next) => {
   try {
-    const { page = 1, limit = 10, q = '', sortBy = 'created_at', order = 'desc' } = req.query;
+    const { page = 1, limit = 10, q = '', sortBy = 'created_at', order = 'desc', category = '' } = req.query;
 
     // Build query
     const query = { is_active: true };
@@ -15,6 +15,16 @@ const getProducts = async (req, res, next) => {
     // Text search if query provided
     if (q.trim()) {
       query.$text = { $search: q };
+    }
+
+    // Category filter
+    if (category.trim()) {
+      const categoryIds = category.split(',').map((id) => id.trim());
+      // Filter out invalid ObjectIds to avoid CastError
+      const validCategoryIds = categoryIds.filter((id) => /^[0-9a-fA-F]{24}$/.test(id));
+      if (validCategoryIds.length > 0) {
+        query.category_id = { $in: validCategoryIds };
+      }
     }
 
     // Pagination
