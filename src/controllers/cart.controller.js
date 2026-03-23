@@ -151,6 +151,7 @@ const addItem = async (req, res, next) => {
 const updateItem = async (req, res, next) => {
   try {
     const { variantSku } = req.params;
+    const upperSku = variantSku.toUpperCase();
     const { error, value } = updateItemSchema.validate(req.body);
     if (error) {
       return res.status(400).json({ message: error.details[0].message });
@@ -163,7 +164,7 @@ const updateItem = async (req, res, next) => {
       return res.status(404).json({ message: 'Cart not found' });
     }
 
-    const itemIndex = cart.items.findIndex((item) => item.variant_sku === variantSku);
+    const itemIndex = cart.items.findIndex((item) => item.variant_sku === upperSku);
     if (itemIndex === -1) {
       return res.status(404).json({ message: 'Item not found in cart' });
     }
@@ -172,7 +173,7 @@ const updateItem = async (req, res, next) => {
       // Remove item
       cart.items.splice(itemIndex, 1);
     } else {
-      const variant = await ProductVariant.findOne({ SKU: variantSku });
+      const variant = await ProductVariant.findOne({ SKU: upperSku });
       if (!variant) {
         return res.status(400).json({ message: 'Variant no longer exists' });
       }
@@ -204,6 +205,7 @@ const updateItem = async (req, res, next) => {
 const removeItem = async (req, res, next) => {
   try {
     const { variantSku } = req.params;
+    const upperSku = variantSku.toUpperCase();
 
     const cart = await Cart.findOne({ user_id: req.user._id, status: 'active' });
     if (!cart) {
@@ -211,7 +213,7 @@ const removeItem = async (req, res, next) => {
     }
 
     const initialLength = cart.items.length;
-    cart.items = cart.items.filter((item) => item.variant_sku !== variantSku);
+    cart.items = cart.items.filter((item) => item.variant_sku !== upperSku);
 
     if (cart.items.length === initialLength) {
       return res.status(404).json({ message: 'Item not found in cart' });
